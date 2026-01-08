@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=3 uid="uid://cnhyiw7dk47y0"]
+
+[ext_resource type="Texture2D" uid="uid://k7234lk4l30m" path="res://images/checker.png" id="1_5n2q2"]
+[ext_resource type="Shader" uid="uid://hlf1byfoevq" path="res://10_screen_reading_shader.gdshader" id="1_fitty"]
+[ext_resource type="Texture2D" uid="uid://dt13w5ymxd0ls" path="res://images/circular_arrow.svg" id="2_5n2q2"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qnlrk"]
+shader = ExtResource("1_fitty")
+shader_parameter/brightness = 0.5
+shader_parameter/contrast = 0.5
+shader_parameter/saturation = 1.0
+
+[sub_resource type="Gradient" id="Gradient_ct6rq"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_er7gs"]
+gradient = SubResource("Gradient_ct6rq")
+width = 512
+height = 512
+
+[node name="Node2D" type="Node2D"]
+
+[node name="SubViewport" type="SubViewport" parent="."]
+size = Vector2i(1000, 600)
+
+[node name="Checker" type="Sprite2D" parent="SubViewport"]
+position = Vector2(650, 451)
+scale = Vector2(0.379883, 0.379883)
+texture = ExtResource("1_5n2q2")
+
+[node name="ScreenRead2" type="Sprite2D" parent="SubViewport"]
+material = SubResource("ShaderMaterial_qnlrk")
+position = Vector2(256, 256)
+texture = SubResource("GradientTexture2D_er7gs")
+
+[node name="CircularArrow" type="Sprite2D" parent="."]
+position = Vector2(525, 287)
+scale = Vector2(0.647541, 0.647541)
+texture = ExtResource("2_5n2q2")
+
+[node name="ScreenRead" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_qnlrk")
+position = Vector2(256, 256)
+texture = SubResource("GradientTexture2D_er7gs")

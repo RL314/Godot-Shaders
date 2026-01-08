@@ -1,0 +1,82 @@
+[gd_scene load_steps=12 format=3 uid="uid://wct5ra6sjtqy"]
+
+[ext_resource type="Script" uid="uid://b1qo8fgx0kfyj" path="res://10a_game_of_life.gd" id="1_nq15y"]
+[ext_resource type="Shader" uid="uid://bl226k0svlkyr" path="res://10a_game_of_life.gdshader" id="2_rsjkq"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_jq2yj"]
+viewport_path = NodePath("BufferSubViewport")
+
+[sub_resource type="Gradient" id="Gradient_kkfp4"]
+offsets = PackedFloat32Array(0.677165, 0.700787, 1)
+colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_jq2yj"]
+noise_type = 4
+seed = 1
+frequency = 0.1122
+fractal_octaves = 6
+fractal_lacunarity = 1.8
+fractal_gain = 0.95
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_nq15y"]
+width = 128
+height = 128
+color_ramp = SubResource("Gradient_kkfp4")
+noise = SubResource("FastNoiseLite_jq2yj")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_rsjkq"]
+viewport_path = NodePath("BufferSubViewport")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jq2yj"]
+resource_local_to_scene = true
+shader = ExtResource("2_rsjkq")
+shader_parameter/size = Vector2(128, 128)
+shader_parameter/initialTexture = SubResource("NoiseTexture2D_nq15y")
+shader_parameter/iFrame = 0
+shader_parameter/lastFrame = SubResource("ViewportTexture_rsjkq")
+
+[sub_resource type="Gradient" id="Gradient_kfil4"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_kkfp4"]
+gradient = SubResource("Gradient_kfil4")
+width = 128
+height = 128
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_3k7sq"]
+viewport_path = NodePath("SubViewport")
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_nq15y")
+
+[node name="Display" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(256, 256)
+scale = Vector2(4, 4)
+texture = SubResource("ViewportTexture_jq2yj")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+disable_3d = true
+transparent_bg = true
+size = Vector2i(128, 128)
+render_target_clear_mode = 1
+render_target_update_mode = 1
+
+[node name="Game" type="Sprite2D" parent="SubViewport"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_jq2yj")
+position = Vector2(64, 64)
+texture = SubResource("GradientTexture2D_kkfp4")
+
+[node name="BufferSubViewport" type="SubViewport" parent="."]
+disable_3d = true
+transparent_bg = true
+size = Vector2i(128, 128)
+render_target_clear_mode = 1
+render_target_update_mode = 1
+
+[node name="BufferSprite2D" type="Sprite2D" parent="BufferSubViewport"]
+texture_filter = 1
+position = Vector2(64, 64)
+texture = SubResource("ViewportTexture_3k7sq")

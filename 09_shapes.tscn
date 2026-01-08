@@ -1,0 +1,188 @@
+[gd_scene load_steps=29 format=3 uid="uid://cds4y1sj5f4i7"]
+
+[ext_resource type="Shader" uid="uid://bot51ymxgl5sj" path="res://09_shapes_atan.gdshader" id="1_wmko3"]
+[ext_resource type="Texture2D" uid="uid://dt13w5ymxd0ls" path="res://images/circular_arrow.svg" id="2_2asgs"]
+[ext_resource type="Shader" uid="uid://c1xwumsa2cep1" path="res://09_shapes_rotational_symmetry.gdshader" id="3_hxcph"]
+[ext_resource type="Shader" uid="uid://b5sw415jxuchh" path="res://09_shapes.gdshader" id="4_bd7b6"]
+[ext_resource type="Shader" uid="uid://bxib0vrpipw0d" path="res://09_tile.gdshader" id="5_ihgmr"]
+[ext_resource type="Shader" uid="uid://33wj2lxompyj" path="res://09_shapes2.gdshader" id="5_yx4gt"]
+[ext_resource type="Shader" uid="uid://bwev0e11vg73w" path="res://09_marching_dots.gdshader" id="7_70xd4"]
+[ext_resource type="Shader" uid="uid://dxyc3wa21eqbp" path="res://09_truchet.gdshader" id="8_8n60v"]
+[ext_resource type="Shader" uid="uid://enpgnaygo1gs" path="res://09_noise.gdshader" id="9_skqe6"]
+[ext_resource type="Shader" uid="uid://ck2cotkuel2ij" path="res://09_noise2.gdshader" id="10_n8gjb"]
+[ext_resource type="Shader" uid="uid://cbehtu61f6ood" path="res://09_perlin.gdshader" id="11_ybejr"]
+[ext_resource type="Shader" uid="uid://peovsy4xm4oe" path="res://09_perlin_art.gdshader" id="12_8xtuc"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ke722"]
+shader = ExtResource("1_wmko3")
+
+[sub_resource type="Gradient" id="Gradient_73g7u"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_lf6wv"]
+gradient = SubResource("Gradient_73g7u")
+width = 128
+height = 128
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u5dbs"]
+shader = ExtResource("3_hxcph")
+shader_parameter/R = 0.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_khr08"]
+shader = ExtResource("4_bd7b6")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cg7lu"]
+shader = ExtResource("5_yx4gt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_561pd"]
+shader = ExtResource("5_ihgmr")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2uoac"]
+shader = ExtResource("7_70xd4")
+shader_parameter/periods = 5.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ac8k6"]
+shader = ExtResource("8_8n60v")
+shader_parameter/n = 16.0
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_qs0wi"]
+noise_type = 3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_w3wmu"]
+noise = SubResource("FastNoiseLite_qs0wi")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n0vah"]
+shader = ExtResource("9_skqe6")
+shader_parameter/n = 12.0
+shader_parameter/noise = SubResource("NoiseTexture2D_w3wmu")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0yc6f"]
+shader = ExtResource("10_n8gjb")
+shader_parameter/n = 12.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ofss8"]
+shader = ExtResource("11_ybejr")
+shader_parameter/n = 12.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s7mhv"]
+shader = ExtResource("12_8xtuc")
+shader_parameter/n = 16.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ctos7"]
+resource_local_to_scene = true
+
+[node name="Shapes" type="Node2D"]
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -26.0
+offset_right = 192.0
+grow_vertical = 0
+text = "Ref: The Book of Shaders"
+
+[node name="atan" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_ke722")
+position = Vector2(100, 100)
+texture = SubResource("GradientTexture2D_lf6wv")
+
+[node name="Label" type="Label" parent="atan"]
+offset_left = -94.0
+offset_top = -27.0
+offset_right = -54.0
+offset_bottom = -1.0
+text = "-𝜋"
+
+[node name="Label2" type="Label" parent="atan"]
+offset_left = -94.0
+offset_top = -1.0
+offset_right = -54.0
+offset_bottom = 25.0
+text = "+𝜋"
+
+[node name="Sprite2D" type="Sprite2D" parent="atan"]
+position = Vector2(2.00002, 1)
+rotation = -0.681124
+scale = Vector2(-0.184, 0.184)
+texture = ExtResource("2_2asgs")
+region_enabled = true
+region_rect = Rect2(30, 30, 550, 550)
+
+[node name="Label3" type="Label" parent="atan"]
+offset_left = -74.0
+offset_top = 64.0
+offset_right = -34.0
+offset_bottom = 90.0
+text = "+y"
+
+[node name="Label4" type="Label" parent="atan"]
+offset_left = -74.0
+offset_top = -90.0
+offset_right = -34.0
+offset_bottom = -64.0
+text = "-y"
+
+[node name="RotationalSymmetry" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_u5dbs")
+position = Vector2(300, 100)
+texture = SubResource("GradientTexture2D_lf6wv")
+
+[node name="Shapes" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_khr08")
+position = Vector2(500, 100)
+texture = SubResource("GradientTexture2D_lf6wv")
+
+[node name="Shapes2" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_cg7lu")
+position = Vector2(700, 100)
+texture = SubResource("GradientTexture2D_lf6wv")
+
+[node name="Tile" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_561pd")
+position = Vector2(900, 100)
+texture = SubResource("GradientTexture2D_lf6wv")
+
+[node name="MarchingDots" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_2uoac")
+position = Vector2(100, 300)
+texture = SubResource("GradientTexture2D_lf6wv")
+
+[node name="Truchet" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_ac8k6")
+position = Vector2(300, 300)
+texture = SubResource("GradientTexture2D_lf6wv")
+
+[node name="Noise" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_n0vah")
+position = Vector2(500, 300)
+texture = SubResource("GradientTexture2D_lf6wv")
+
+[node name="Noise2" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_0yc6f")
+position = Vector2(700, 300)
+texture = SubResource("GradientTexture2D_lf6wv")
+
+[node name="Perlin" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_ofss8")
+position = Vector2(900, 300)
+texture = SubResource("GradientTexture2D_lf6wv")
+
+[node name="PerlinArt" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_s7mhv")
+position = Vector2(100, 500)
+texture = SubResource("GradientTexture2D_lf6wv")
+
+[node name="DLA" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_ctos7")
+position = Vector2(300, 500)
+texture = SubResource("GradientTexture2D_lf6wv")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+size = Vector2i(128, 128)
+render_target_update_mode = 4
+
+[node name="DLA" type="Sprite2D" parent="SubViewport"]
+position = Vector2(64, 64)
+texture = SubResource("GradientTexture2D_lf6wv")

@@ -1,0 +1,24 @@
+[gd_scene load_steps=6 format=3 uid="uid://bbshbvi8uo7vq"]
+
+[ext_resource type="Shader" uid="uid://rr5j64empijs" path="res://shaders/02_tone_mapping.gdshader" id="1_bmjwi"]
+[ext_resource type="Texture2D" uid="uid://d3oqpdjtg2tj8" path="res://images/Repin_Procession.png" id="1_gb7jb"]
+
+[sub_resource type="Gradient" id="Gradient_1eg22"]
+offsets = PackedFloat32Array(0, 0.635294, 0.745098, 0.909804, 1)
+colors = PackedColorArray(0, 0.017, 0.06, 1, 0.5133, 0.583608, 0.59, 1, 0.75, 0.562, 0.3975, 1, 0.93, 0.83328, 0.6882, 1, 1, 0.988333, 0.9, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_wadq5"]
+gradient = SubResource("Gradient_1eg22")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g51yl"]
+shader = ExtResource("1_bmjwi")
+shader_parameter/gradient = SubResource("GradientTexture1D_wadq5")
+
+[node name="TextureRect" type="TextureRect"]
+material = SubResource("ShaderMaterial_g51yl")
+offset_left = -48.0
+offset_top = -36.0
+offset_right = 1232.0
+offset_bottom = 755.0
+scale = Vector2(0.85, 0.85)
+texture = ExtResource("1_gb7jb")

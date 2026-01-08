@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://walmusbog6xs"]
+
+[ext_resource type="Shader" uid="uid://clos0p3m1ibr4" path="res://shaders/01_simple_uv_wiggle.gdshader" id="1_5cypx"]
+[ext_resource type="Texture2D" uid="uid://d3oqpdjtg2tj8" path="res://images/Repin_Procession.png" id="2_bge0o"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7psh1"]
+shader = ExtResource("1_5cypx")
+
+[node name="TextureRect" type="TextureRect"]
+material = SubResource("ShaderMaterial_7psh1")
+offset_left = -48.0
+offset_top = -36.0
+offset_right = 1232.0
+offset_bottom = 755.0
+scale = Vector2(0.85, 0.85)
+texture = ExtResource("2_bge0o")

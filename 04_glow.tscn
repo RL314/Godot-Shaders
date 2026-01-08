@@ -1,0 +1,91 @@
+[gd_scene load_steps=15 format=3 uid="uid://db745kxy38qcx"]
+
+[ext_resource type="Script" uid="uid://woxnc8r6a3bx" path="res://04_glow.gd" id="1_g8ioe"]
+[ext_resource type="Shader" uid="uid://66smrdx21tpj" path="res://shaders/04_glow_noise.gdshader" id="2_wh4go"]
+[ext_resource type="Shader" uid="uid://bot2tvwewbb3o" path="res://shaders/04_glow_glow1.gdshader" id="3_f0etb"]
+[ext_resource type="Shader" uid="uid://ddivy0ta282hi" path="res://shaders/04_glow_glow2.gdshader" id="4_k8oiu"]
+[ext_resource type="Texture2D" uid="uid://d3oqpdjtg2tj8" path="res://images/Repin_Procession.png" id="5_e62kr"]
+
+[sub_resource type="Gradient" id="Gradient_tn4ei"]
+colors = PackedColorArray(0.072, 0.36, 0, 1, 0.2744, 0.98, 0.686, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_55a1c"]
+gradient = SubResource("Gradient_tn4ei")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_2x3oy"]
+offset = Vector3(1, 0, 0)
+fractal_octaves = 8
+fractal_lacunarity = 1.3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_m30a2"]
+noise = SubResource("FastNoiseLite_2x3oy")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f5edh"]
+shader = ExtResource("2_wh4go")
+shader_parameter/gradient = SubResource("GradientTexture1D_55a1c")
+shader_parameter/noise = SubResource("NoiseTexture2D_m30a2")
+shader_parameter/top_left = Vector2(0.1, 0.25)
+shader_parameter/size = Vector2(0.624, 0.462)
+shader_parameter/swizzling_omega = 0.0
+
+[sub_resource type="SystemFont" id="SystemFont_2ussl"]
+font_names = PackedStringArray("Georgia")
+font_weight = 700
+subpixel_positioning = 0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7hbbd"]
+shader = ExtResource("3_f0etb")
+shader_parameter/lod = 3.5
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_exbgr"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jvxcr"]
+shader = ExtResource("4_k8oiu")
+shader_parameter/srcCentre = Vector2(0.26, 0.6)
+shader_parameter/halfLength = Vector2(0.0391, 0.063)
+
+[node name="Node" type="Node"]
+script = ExtResource("1_g8ioe")
+
+[node name="Background" type="ColorRect" parent="."]
+offset_right = 1000.0
+offset_bottom = 600.0
+
+[node name="Label" type="Label" parent="."]
+material = SubResource("ShaderMaterial_f5edh")
+offset_left = 100.0
+offset_top = 150.0
+offset_right = 1418.0
+offset_bottom = 427.0
+theme_override_constants/outline_size = 40
+theme_override_fonts/font = SubResource("SystemFont_2ussl")
+theme_override_font_sizes/font_size = 240
+text = "2024 April"
+
+[node name="Glow" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_7hbbd")
+offset_right = 1000.0
+offset_bottom = 600.0
+texture = SubResource("CanvasTexture_exbgr")
+
+[node name="Label2" type="Label" parent="."]
+material = SubResource("ShaderMaterial_f5edh")
+offset_left = 100.0
+offset_top = 150.0
+offset_right = 1418.0
+offset_bottom = 427.0
+theme_override_fonts/font = SubResource("SystemFont_2ussl")
+theme_override_font_sizes/font_size = 240
+text = "2024 April"
+
+[node name="TextureRect" type="TextureRect" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_jvxcr")
+clip_contents = true
+offset_left = 80.0
+offset_top = 60.0
+offset_right = 210.0
+offset_bottom = 190.0
+texture = ExtResource("5_e62kr")
+expand_mode = 1
+stretch_mode = 2

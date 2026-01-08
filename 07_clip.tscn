@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://btpwd28uq8pg8"]
+
+[ext_resource type="PackedScene" uid="uid://walmusbog6xs" path="res://01_simple_uv.tscn" id="1_2hs48"]
+[ext_resource type="Shader" uid="uid://dasdm2k7d88w8" path="res://shaders/07_clip.gdshader" id="2_2ortc"]
+[ext_resource type="Texture2D" uid="uid://k7234lk4l30m" path="res://images/checker.png" id="2_h7ynt"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bdtuy"]
+shader = ExtResource("2_2ortc")
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Background" parent="." instance=ExtResource("1_2hs48")]
+material = null
+layout_mode = 0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 1280.0
+offset_bottom = 791.0
+
+[node name="Overlay" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_bdtuy")
+layout_mode = 0
+offset_right = 1000.0
+offset_bottom = 600.0
+texture = ExtResource("2_h7ynt")
+expand_mode = 1

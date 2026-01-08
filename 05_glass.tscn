@@ -1,0 +1,78 @@
+[gd_scene load_steps=11 format=3 uid="uid://c58brtys45v63"]
+
+[ext_resource type="Shader" uid="uid://d3pmcwaetdfin" path="res://shaders/05_glass_convex.gdshader" id="2_7cb23"]
+[ext_resource type="Texture2D" uid="uid://d3oqpdjtg2tj8" path="res://images/Repin_Procession.png" id="2_clca3"]
+[ext_resource type="Texture2D" uid="uid://k7234lk4l30m" path="res://images/checker.png" id="2_nkui8"]
+[ext_resource type="Shader" uid="uid://f1x7lhqp6orm" path="res://shaders/05_glass_finite_diff.gdshader" id="3_26fm0"]
+[ext_resource type="Texture2D" uid="uid://djuo8o8fnm20i" path="res://images/lens.png" id="3_atvyx"]
+[ext_resource type="Shader" uid="uid://siskbmfrogt0" path="res://shaders/05_glass_concave.gdshader" id="5_dof7o"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x3tdx"]
+shader = ExtResource("3_26fm0")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ijbsc"]
+shader = ExtResource("2_7cb23")
+shader_parameter/n = 1.4
+shader_parameter/d = 0.3
+shader_parameter/dist = 0.02
+shader_parameter/tintSubtract = Vector3(0.12, 0.03, 0.01)
+shader_parameter/tintStrength = 5.0
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_ao6d1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2i006"]
+shader = ExtResource("5_dof7o")
+shader_parameter/n = 1.4
+shader_parameter/R = 0.6
+shader_parameter/d = 0.05
+shader_parameter/dist = 0.0
+shader_parameter/tintSubtract = Vector3(0.07, 0.01, 0.06)
+shader_parameter/tintStrength = 9.0
+
+[node name="TextureRect" type="TextureRect"]
+offset_left = -48.0
+offset_top = -36.0
+offset_right = 1232.0
+offset_bottom = 755.0
+scale = Vector2(0.85, 0.85)
+texture = ExtResource("2_clca3")
+
+[node name="Checker" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 500.0
+offset_top = 400.0
+offset_right = 1000.0
+offset_bottom = 900.0
+texture = ExtResource("2_nkui8")
+expand_mode = 1
+
+[node name="FiniteDiff" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_x3tdx")
+layout_mode = 0
+offset_left = -91.7647
+offset_top = 302.353
+offset_right = 420.235
+offset_bottom = 814.353
+texture = ExtResource("3_atvyx")
+
+[node name="BackBufferCopy" type="BackBufferCopy" parent="."]
+copy_mode = 2
+
+[node name="Convex" type="TextureRect" parent="BackBufferCopy"]
+material = SubResource("ShaderMaterial_ijbsc")
+offset_left = 471.765
+offset_top = 136.471
+offset_right = 871.765
+offset_bottom = 536.471
+texture = SubResource("CanvasTexture_ao6d1")
+
+[node name="BackBufferCopy2" type="BackBufferCopy" parent="."]
+copy_mode = 2
+
+[node name="Concave" type="TextureRect" parent="BackBufferCopy2"]
+material = SubResource("ShaderMaterial_2i006")
+offset_left = 807.059
+offset_top = 130.588
+offset_right = 1207.06
+offset_bottom = 530.588
+texture = SubResource("CanvasTexture_ao6d1")
